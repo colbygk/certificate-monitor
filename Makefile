@@ -18,6 +18,6 @@ coverage:
 lambda:
 	@npm install
 	@echo "Creating certificate-monitor-$(shell git log --pretty=format:'%h' -n 1)".zip
-	@zip -qr certificate-monitor-$(shell git log --pretty=format:'%h' -n 1).zip node_modules lambda.js
+	@zip -qr certificate-monitor-$(shell git log --pretty=format:'%h' -n 1).zip node_modules lib lambda.js
 
 .PHONY: lint test coverage
