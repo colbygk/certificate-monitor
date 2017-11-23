@@ -15,7 +15,6 @@ exports.handler = (event, context, callback) => {
     log.info('checking:',event.urlList);
     event.urlList.forEach( (target) => {
         if (target.length > 0) {
-            response[target] = JSON.stringify
             certificate.getCertificate(target, false, (cert) => {
                 certInfo = api.certificateCheck(cert, daysToWarn);
                 response[target] = certInfo;
