@@ -53,10 +53,8 @@ $ node index.js https://google.com | ./node_modules/.bin/bunyan
 [2017-11-23T19:52:53.415Z]  INFO: certificate-monitor/37777 on Tethys: date_checked_against: 2017-11-23T19:52:53.308Z
 ```
 
-* Check multiple URLs using a file with line-separated URLs
-
-```bash 
-```
+* Check multiple URLs using a file with line-separated URLs by passing the name of the file via `--urlsfrom`
+* By default, the `date_warning` will check 30 days in advance and will be true if the detected SSL certificate is going to expire within that time period. You can specify different numbers of days via `--days`. You can specify a particular date to test from via `--date`
 
 ### AWS API and Lambda Integration
 
