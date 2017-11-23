@@ -12,12 +12,15 @@ exports.handler = (event, context, callback) => {
     var response = {};
     var certInfo = {};
     
-    log.info('checking:',event.urlList);
     event.urlList.forEach( (target) => {
         if (target.length > 0) {
+            log.info('checking:',target);
             certificate.getCertificate(target, false, (cert) => {
+                log.info('cert:',cert);
                 certInfo = api.certificateCheck(cert, daysToWarn);
+                log.info('cert:',certInfo);
                 response[target] = certInfo;
+                log.info('response:',response);
             });
         }
     });
