@@ -102,7 +102,7 @@ Response should look like:
 {
     "headers": {...},
     "statusCode": 200,
-    "body": "{\"https://day.scratch.mit.edu\":{\"ssl_ok\":true}}"
+    "body": "{\"https://google.com\":{\"ssl_ok\":true}}"
 }
 ```
 
