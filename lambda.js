@@ -7,7 +7,8 @@ const Promise = require('es6-promise').Promise;
 const daysToWarn = parseInt(process.env.DAYS_TO_WARN || '30', 10);
 
 exports.handler = (event, context, callback) => {
-
+    log.info('event:',event);
+    console.log('event.body:',event.body);
     var proxyResponse = Object({
         headers: {},
         statusCode: 200,
@@ -16,7 +17,7 @@ exports.handler = (event, context, callback) => {
     var certInfo = {};
     var response = {};
     
-    let checks = event.urlList.map( (target) => {
+    let checks = JSON.parse(event.body)['urlList'].map( (target) => {
         if (target.length > 0) {
             log.info('target:',target);
             return new Promise( (resolve) => {
