@@ -46,7 +46,7 @@ test('function', function (t) {
 
 test('function', function (t) {
     // Assumes that Google will always have a good certificate... ?
-    certificate.getCertificate('https://www.google.com', null, (cert) => {
+    certificate.getCertificate('https://google.com', null, (cert) => {
         var daysToWarn = 5;
         var dateToCheck = new Date(new Date(cert['valid_to'])
             .getTime() - 4 * 86400 * 1000);
