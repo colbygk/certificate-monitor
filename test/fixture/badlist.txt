@@ -1,0 +1,2 @@
+https://expired.badssl.com
+https://self-signed.badssl.com
