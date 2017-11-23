@@ -56,6 +56,19 @@ $ node index.js https://google.com | ./node_modules/.bin/bunyan
 * Check multiple URLs using a file with line-separated URLs by passing the name of the file via `--urlsfrom`
 * By default, the `date_warning` will check 30 days in advance and will be true if the detected SSL certificate is going to expire within that time period. You can specify different numbers of days via `--days`. You can specify a particular date to test from via `--date`
 
+### Arbitrary API setup
+
+```javascript
+const cm = require('certificate-monitor').certificate;
+const cmapi = require('certificate-monitor').api;
+cm.getCertificate(target, false, (cert) => {
+    const certInfo = 
+       cmapi.certificateCheck(cert, daysToWarn, dateToCheck);
+});
+```
+
+`certInfo` will contain information about the certificate and when it will expire/has expired.
+
 ### AWS API and Lambda Integration
 
 ```
@@ -72,9 +85,9 @@ Upload the certificate-monitor-hash.zip that you've created to the Lambda functi
 
 Invokation/testing using cURL:
 
-```
-curl -X POST -d '{ "urlList": [ "https://day.scratch.mit.edu" ] }' https://#########.execute-api.us-east-1.amazonaws.com/prod/certificate-monitor
-{"https://day.scratch.mit.edu":{"ssl_ok":true}}
+```bash
+$ curl -X POST -d '{ "urlList": [ "https://google.com" ] }' https://#########.execute-api.us-east-1.amazonaws.com/prod/certificate-monitor
+{"https://google.com":{"ssl_ok":true}}
 ```
 
 ### Pingdom Integration and AWS Lambda
