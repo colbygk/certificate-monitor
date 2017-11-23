@@ -2,6 +2,7 @@
 const certificate = require('./lib/certificate');
 const api = require('./lib/api');
 const log = require('./lib/log');
+const Promise = require('promise').Promise;
 
 const daysToWarn = parseInt(process.env.DAYS_TO_WARN || '30', 10);
 
@@ -12,18 +13,17 @@ exports.handler = (event, context, callback) => {
     var response = {};
     var certInfo = {};
     
-    event.urlList.forEach( (target) => {
+    let checks = event.urlList.map( (target) => {
         if (target.length > 0) {
-            log.info('checking:',target);
-            certificate.getCertificate(target, false, (cert) => {
-                log.info('cert:',cert);
-                certInfo = api.certificateCheck(cert, daysToWarn);
-                log.info('cert:',certInfo);
-                response[target] = certInfo;
-                log.info('response:',response);
+            return new Promise( (resolve) => {
+                certificate.getCertificate(target, false, resolve, (cert) => {
+                    certInfo = api.certificateCheck(cert, daysToWarn);
+                    response[target] = certInfo;
+                    resolve(certInfo);
+                });
             });
         }
     });
 
-    callback(null, JSON.stringify(response));
+    Promise.all(checks).then( () => callback(null, JSON.stringify(response)));
 };
