@@ -59,13 +59,11 @@ $ node index.js https://google.com | ./node_modules/.bin/bunyan
 ### Arbitrary API setup
 
 ```javascript
-const cm = require('certificate-monitor').certificate;
-const cmapi = require('certificate-monitor').api;
-cm.getCertificate(target, false, (cert) => {
-    const certInfo = 
-       cmapi.certificateCheck(cert, daysToWarn, dateToCheck);
-});
+const cm = require('certificate-monitor');
+const certInfo = cm.checkCertificateAtURL("https://google.com");
 ```
+
+(TODO: Make callback)
 
 `certInfo` will contain information about the certificate and when it will expire/has expired.
 

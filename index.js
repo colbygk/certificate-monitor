@@ -62,3 +62,12 @@ urlList.forEach( (target) => {
         });
     }
 });
+
+
+exports.checkCertificateAtURL = (target) => {
+    certificate.getCertificate(target, false, (cert) => {
+        const certInfo =
+            api.certificateCheck(cert, daysToWarn, dateToCheck);
+        return certInfo;
+    });
+};
