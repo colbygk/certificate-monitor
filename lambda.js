@@ -15,8 +15,9 @@ exports.handler = (event, context, callback) => {
     
     let checks = event.urlList.map( (target) => {
         if (target.length > 0) {
+            log.info('promising target:',target);
             return new Promise( (resolve) => {
-                certificate.getCertificate(target, false, resolve, (cert) => {
+                certificate.getCertificate(target, false, (cert) => {
                     certInfo = api.certificateCheck(cert, daysToWarn);
                     response[target] = certInfo;
                     resolve(certInfo);
@@ -25,5 +26,8 @@ exports.handler = (event, context, callback) => {
         }
     });
 
-    Promise.all(checks).then( () => callback(null, JSON.stringify(response)));
+    Promise.all(checks).then( () => {
+        log.info('response:',response);
+        callback(null, JSON.stringify(response));
+    });
 };
