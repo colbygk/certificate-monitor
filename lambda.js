@@ -8,8 +8,13 @@ const daysToWarn = parseInt(process.env.DAYS_TO_WARN || '30', 10);
 
 exports.handler = (event, context, callback) => {
 
-    var response = {};
+    var proxyResponse = Object({
+        headers: {},
+        statusCode: 200,
+        body: ""
+    });
     var certInfo = {};
+    var response = {};
     
     let checks = event.urlList.map( (target) => {
         if (target.length > 0) {
@@ -17,7 +22,9 @@ exports.handler = (event, context, callback) => {
             return new Promise( (resolve) => {
                 certificate.getCertificate(target, false, (cert) => {
                     certInfo = api.certificateCheck(cert, daysToWarn);
-                    response[target] = certInfo;
+                    response[target] = {};
+                    response[target]['ssl_ok'] =
+                        (!certInfo.date_warning && certInfo.authorized);
                     resolve(certInfo);
                 });
             });
@@ -26,6 +33,8 @@ exports.handler = (event, context, callback) => {
 
     Promise.all(checks).then( () => {
         log.info('response:',response);
-        callback(null, JSON.stringify(response));
+        proxyResponse.body = JSON.stringify(response);
+        context.succeed(proxyResponse);
+        //callback(null, proxyResponse);
     });
 };
