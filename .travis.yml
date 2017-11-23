@@ -1,7 +1,7 @@
 language: node_js
 sudo: false
 node_js:
-  - "4"
+  - "6"
   - "stable"
 
 before_script:
@@ -9,12 +9,10 @@ before_script:
 
 script:
   - npm test
-  - npm run lint
-  - npm run test:coverage
 
 after_script:
   - cat coverage/lcov.info | codeclimate-test-reporter
 
 addons:
   code_climate:
-    repo_token: c504aeb3934531b5bccc1b95cfa5fe879056b2516f8669b81542cda4c1aad9e6
+    repo_token: 491237c01cf5740cc49e91a9387d5d5756fdb630ca3028d83000901553bbefc0
