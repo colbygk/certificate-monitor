@@ -8,11 +8,10 @@ const daysToWarn = parseInt(process.env.DAYS_TO_WARN || '30', 10);
 
 exports.handler = (event, context, callback) => {
     log.info('event:',event);
-    console.log('event.body:',event.body);
     var proxyResponse = Object({
         headers: {},
         statusCode: 200,
-        body: ""
+        body: ''
     });
     var certInfo = {};
     var response = {};
@@ -36,6 +35,6 @@ exports.handler = (event, context, callback) => {
         log.info('response:',response);
         proxyResponse.body = JSON.stringify(response);
         context.succeed(proxyResponse);
-        //callback(null, proxyResponse);
+        callback(null, proxyResponse);
     });
 };
