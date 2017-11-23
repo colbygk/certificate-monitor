@@ -2,7 +2,7 @@
 const certificate = require('./lib/certificate');
 const api = require('./lib/api');
 const log = require('./lib/log');
-const Promise = require('promise').Promise;
+const Promise = require('es6-promise').Promise;
 
 const daysToWarn = parseInt(process.env.DAYS_TO_WARN || '30', 10);
 
