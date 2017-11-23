@@ -23,8 +23,6 @@ const usage = function() {
         '  specify a custom CA file to determine if the authority of the\n' +
         '  returned certificates are trusted\n'
     );
-    // eslint-disable-next-line no-console
-    console.log(argv);
     return;
 };
 
@@ -39,14 +37,21 @@ if (argv.date) {
 
 if (argv.help) {
     usage();
-} else if (argv.urlsfrom) {
-    const lineReader = require('readline').createInterface({
-        input: require('fs').createReadStream(argv.urlsfrom)
-    });
-    lineReader.on('line', (line) => {
-        certificate.getCertificate(line, false, (cert) => {
-            const certInfo =
-                api.certificateCheck(cert, daysToWarn, dateToCheck);
+    return;
+}
+
+var urlList = [];
+
+if (argv.urlsfrom) {
+    urlList = require('fs').readFileSync(argv.urlsfrom).toString().split('\n');
+}
+
+urlList.push.apply(urlList, argv._);
+
+urlList.forEach( (target) => {
+    if (target.length > 0) {
+        certificate.getCertificate(target, false, (cert) => {
+            const certInfo = api.certificateCheck(cert, daysToWarn, dateToCheck);
             if (argv.json) {
                 // eslint-disable-next-line no-console
                 console.log(api.jsonCertificateCheck(certInfo));
@@ -54,17 +59,5 @@ if (argv.help) {
                 api.logCertificateCheck(certInfo);
             }
         });
-    });
-} else if (argv._.length > 0) {
-    certificate.getCertificate(argv._[0], false, (cert) => {
-        const certInfo = api.certificateCheck(cert, daysToWarn, dateToCheck);
-        if (argv.json) {
-            // eslint-disable-next-line no-console
-            console.log(api.jsonCertificateCheck(certInfo));
-        } else {
-            api.logCertificateCheck(certInfo);
-        }
-    });
-} else {
-    usage();
-}
+    }
+});
