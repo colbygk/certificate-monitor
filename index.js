@@ -51,7 +51,8 @@ urlList.push.apply(urlList, argv._);
 urlList.forEach( (target) => {
     if (target.length > 0) {
         certificate.getCertificate(target, false, (cert) => {
-            const certInfo = api.certificateCheck(cert, daysToWarn, dateToCheck);
+            const certInfo = 
+                api.certificateCheck(cert, daysToWarn, dateToCheck);
             if (argv.json) {
                 // eslint-disable-next-line no-console
                 console.log(api.jsonCertificateCheck(certInfo));
