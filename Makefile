@@ -11,6 +11,7 @@ lint:
 test:
 	@make lint
 	$(TAP) ./test/unit/*.js
+	@make coverage
 
 coverage:
 	$(TAP) ./test/unit/*.js --coverage --coverage-report=lcov
