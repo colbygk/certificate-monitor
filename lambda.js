@@ -10,8 +10,8 @@ exports.handler = (event, context, callback) => {
     var response = {};
     var certInfo = {};
     
-    urlList.forEach( (target) => {
-        log.info('checking:',event.urlList);
+    log.info('checking:',event.urlList);
+    event.urlList.forEach( (target) => {
         if (target.length > 0) {
             response[target] = JSON.stringify
             certificate.getCertificate(target, false, (cert) => {
