@@ -60,10 +60,10 @@ $ node index.js https://google.com | ./node_modules/.bin/bunyan
 
 ```javascript
 const cm = require('certificate-monitor');
-const certInfo = cm.checkCertificateAtURL("https://google.com");
+cm.checkCertificateAtURL("https://google.com", (certInfo) => {
+    console.log(certInfo);
+});
 ```
-
-(TODO: Make callback)
 
 `certInfo` will contain information about the certificate and when it will expire/has expired.
 
