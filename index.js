@@ -64,10 +64,8 @@ urlList.forEach( (target) => {
 });
 
 
-exports.checkCertificateAtURL = (target) => {
+exports.checkCertificateAtURL = (target, cb) => {
     certificate.getCertificate(target, false, (cert) => {
-        const certInfo =
-            api.certificateCheck(cert, daysToWarn, dateToCheck);
-        return certInfo;
+        cb(api.certificateCheck(cert, daysToWarn, dateToCheck));
     });
 };
