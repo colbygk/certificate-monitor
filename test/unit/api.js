@@ -60,3 +60,27 @@ test('function', function (t) {
         t.end();
     });
 });
+
+
+test('function', function (t) {
+    // Assumes that Google will always have a good certificate... ?
+    certificate.getCertificate('https://google.com', null, (cert) => {
+        var certInfo = api.certificateCheck(cert);
+        var jsonCert = api.jsonCertificateCheck(certInfo);
+        t.type(jsonCert, 'string');
+        var certObj = JSON.parse(jsonCert);
+        t.type(certObj, 'object');
+        t.ok(certObj.authorized === certInfo.authorized);
+        t.end();
+    });
+});
+
+test('function', function (t) {
+    // Assumes that Google will always have a good certificate... ?
+    certificate.getCertificate('https://google.com', null, (cert) => {
+        var certInfo = api.certificateCheck(cert);
+        api.logCertificateCheck(certInfo);
+        t.end();
+    });
+});
+
